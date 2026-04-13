@@ -14,7 +14,7 @@ public class TruffulaOptionsTest {
   void testValidDirectoryIsSet(@TempDir File tempDir) throws FileNotFoundException {
     // Arrange: Prepare the arguments with the temp directory
     File directory = new File(tempDir, "subfolder");
-    directory.mkdir();
+    directory.mkdir(); 
     String directoryPath = directory.getAbsolutePath();
     String[] args = {"-nc", "-h", directoryPath};
 
