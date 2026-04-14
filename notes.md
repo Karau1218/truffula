@@ -15,3 +15,4 @@ this is where the options apply - the directory to print, whrther files should b
 ## TruffulaPrinter.java / TruffulaPrinterTest.java
 This class basically prints the directory tree with the options provided. You basically traverse the and print each file / folder
 ## AlphabeticalFileSorter.java
+This basically sorts the array of files alphabetically by their name

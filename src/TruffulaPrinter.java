@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.PrintStream;
 import java.util.List;
 
@@ -112,7 +113,41 @@ public class TruffulaPrinter {
     // DO NOT USE SYSTEM.OUT.PRINTLN
     // USE out.println instead (will use your ColorPrinter)
 
-    out.println("printTree was called!");
-    out.println("My options are: " + options);
+
+    // get the root folder, print the name and start 
+    // recurse traversal
+    File root = options.getRoot();
+    out.println(root.getName() + "/");
+    printTreeHelper(root, 1);
   }
+  private void printTreeHelper(File folder, int depth) {
+
+    // get the files/ folder and loop through , if empty stop recursion
+    File[] files = folder.listFiles();
+
+    if (files == null) {
+        return;
+    }
+
+    for (File file : files) {
+
+        // indentation (3 spaces per level)
+        for (int i = 0; i < depth; i++) {
+            out.print("   ", true);
+        }
+
+        // if its a directory directory , print name and recurse
+        if (file.isDirectory()) {
+            out.println(file.getName() + "/");
+
+            // recurse inside folder
+            printTreeHelper(file, depth + 1);
+        }
+
+        // if file, print the name
+        else {
+            out.println(file.getName());
+        }
+    }
+}
 }
