@@ -9,7 +9,7 @@ App java is where the main method is and deals with the user input to which you 
 ## ConsoleColor.java
 The consolecolor enum has the ANSI escape codes that color the texts in the console. Each color has its string code and can be used in print statements
 ## ColorPrinter.java / ColorPrinterTest.java
-
+The color printer basically prints the messages with the colorcodes applied on the text. setcurrentcolor sets the color for future prints, getcurrentcolor return the color being used now. println --> calls print and adds a newline, println (string message, boolean reset) --> prints the message, the color code  
 ## TruffulaOptions.java / TruffulaOptionsTest.java
 
 ## TruffulaPrinter.java / TruffulaPrinterTest.java
