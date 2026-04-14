@@ -105,15 +105,19 @@ public class TruffulaOptions  {
     if (args.length == 0) {
         throw new IllegalArgumentException("Missing arguments");
     }
-
+    
     boolean showHidden = false;
     boolean useColor = true;
 
     String path = args[args.length - 1];
+    if (path.startsWith("-")) {
+      throw new IllegalArgumentException("Missing path argument");
+    }
+
 
     for (int i = 0; i < args.length - 1; i++) {
         String arg = args[i];
-      // hidden dile is shown if -h is present
+      // hidden file is shown if -h is present
         if (arg.equals("-h")) {
             showHidden = true;
         } 

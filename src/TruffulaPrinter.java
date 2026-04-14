@@ -131,7 +131,7 @@ public class TruffulaPrinter {
 
     for (File file : files) {
 
-        // indentation (3 spaces per level)
+        // indentation of 3 spaces per level
         for (int i = 0; i < depth; i++) {
             out.print("   ", true);
         }

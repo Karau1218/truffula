@@ -149,4 +149,39 @@ public class TruffulaPrinterTest {
         // Assert that the output matches the expected output exactly
         assertEquals(expected.toString(), output);
     }
+    @Test
+public void test444_basicTreeStructure(@TempDir File tempDir) throws Exception {
+    // Create structure:
+    // root/
+    //   file1.txt
+    //   folder/
+    //     file2.txt
+
+    File root = new File(tempDir, "root");
+    root.mkdir();
+
+    File file1 = new File(root, "file1.txt");
+    file1.createNewFile();
+
+    File folder = new File(root, "folder");
+    folder.mkdir();
+
+    File file2 = new File(folder, "file2.txt");
+    file2.createNewFile();
+
+    TruffulaOptions options = new TruffulaOptions(root, false, false);
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    PrintStream ps = new PrintStream(baos);
+
+    TruffulaPrinter printer = new TruffulaPrinter(options, ps);
+    printer.printTree();
+
+    String output = baos.toString();
+
+    assertTrue(output.contains("root/"));
+    assertTrue(output.contains("file1.txt"));
+    assertTrue(output.contains("folder/"));
+    assertTrue(output.contains("file2.txt"));
+}
 }
