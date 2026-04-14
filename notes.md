@@ -11,7 +11,7 @@ The consolecolor enum has the ANSI escape codes that color the texts in the cons
 ## ColorPrinter.java / ColorPrinterTest.java
 The color printer basically prints the messages with the colorcodes applied on the text. setcurrentcolor sets the color for future prints, getcurrentcolor return the color being used now. println --> calls print and adds a newline, println (string message, boolean reset) --> prints the message, the color code  
 ## TruffulaOptions.java / TruffulaOptionsTest.java
-
+this is where the options apply - the directory to print, whrther files should be hidden or showed / wther color output should be enabled
 ## TruffulaPrinter.java / TruffulaPrinterTest.java
-
+This class basically prints the directory tree with the options provided. You basically traverse the and print each file / folder
 ## AlphabeticalFileSorter.java
