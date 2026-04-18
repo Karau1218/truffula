@@ -117,56 +117,48 @@ public class TruffulaPrinter {
     // get the root folder, print the name and start 
     // recurse traversal
     File root = options.getRoot();
-    out.setCurrentColor(ConsoleColor.WHITE); // root is always white
+    
+    // Root is always white. 
+    out.setCurrentColor(ConsoleColor.WHITE);
     out.println(root.getName() + "/");
 
     printTreeHelper(root, 1);
-  }
+}
 
-  private void printTreeHelper(File folder, int depth) {
-
-    // get the files/ folder and loop through , if empty stop recursion
+private void printTreeHelper(File folder, int depth) {
     File[] files = folder.listFiles();
-
     if (files == null) return;
     
-        //  Wave 7: alphabetical sorting
     files = AlphabeticalFileSorter.sort(files);
 
     for (File file : files) {
-      // wave 5: skipping hidden is not allowed
-      if (!options.isShowHidden() && file.isHidden()) {
-        continue;
-      }
-
-      //wave 6: determining the color
-       ConsoleColor color;
-        if (options.isUseColor()) {
-            color = colorSequence.get(depth % colorSequence.size());
-        } else {
-            color = ConsoleColor.WHITE;
+        if (!options.isShowHidden() && file.isHidden()) {
+            continue;
         }
 
+        //  Determine the color
+        ConsoleColor color = options.isUseColor() 
+            ? colorSequence.get(depth % colorSequence.size()) 
+            : ConsoleColor.WHITE;
         out.setCurrentColor(color);
 
-        // indentation of 3 spaces per level
+        
+        StringBuilder line = new StringBuilder();
         for (int i = 0; i < depth; i++) {
-            out.print("   ", false);
+            line.append("   "); // the 3 spaces
+        }
+        line.append(file.getName());
+        if (file.isDirectory()) {
+            line.append("/");
         }
 
-        // if its a directory directory , print name and recurse
-        if (file.isDirectory()) {
-            out.println(file.getName() + "/");
+        // 3. Print the line. 
+        out.println(line.toString());
 
-            // recurse inside folder
+        // 4. Recurse if directory
+        if (file.isDirectory()) {
             printTreeHelper(file, depth + 1);
         }
-
-        // if file, print the name
-        else {
-            out.println(file.getName());
-        }
-        
     }
 }
 }
