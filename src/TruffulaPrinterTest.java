@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TruffulaPrinterTest {
@@ -183,5 +184,52 @@ public void test444_basicTreeStructure(@TempDir File tempDir) throws Exception {
     assertTrue(output.contains("file1.txt"));
     assertTrue(output.contains("folder/"));
     assertTrue(output.contains("file2.txt"));
+}
+
+
+
+@Test
+public void test666_colorsUsed(@TempDir File tempDir) throws Exception {
+    File root = new File(tempDir, "root");
+    root.mkdir();
+
+    File file = new File(root, "a.txt");
+    file.createNewFile();
+
+    TruffulaOptions options = new TruffulaOptions(root, false, true);
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    PrintStream ps = new PrintStream(baos);
+
+    TruffulaPrinter printer = new TruffulaPrinter(options, ps);
+    printer.printTree();
+
+    String output = baos.toString();
+
+    // just check ANSI codes exist
+    assertTrue(output.contains("\033"));
+}
+
+
+@Test
+public void test777_sorted(@TempDir File tempDir) throws Exception {
+    File root = new File(tempDir, "root");
+    root.mkdir();
+
+    new File(root, "banana.txt").createNewFile();
+    new File(root, "Apple.txt").createNewFile();
+
+    TruffulaOptions options = new TruffulaOptions(root, false, false);
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    PrintStream ps = new PrintStream(baos);
+
+    TruffulaPrinter printer = new TruffulaPrinter(options, ps);
+    printer.printTree();
+
+    String output = baos.toString();
+
+    // Apple should come before banana
+    assertTrue(output.indexOf("Apple.txt") < output.indexOf("banana.txt"));
 }
 }
