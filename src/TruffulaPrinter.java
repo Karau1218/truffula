@@ -117,6 +117,7 @@ public class TruffulaPrinter {
     // get the root folder, print the name and start 
     // recurse traversal
     File root = options.getRoot();
+    out.setCurrentColor(ConsoleColor.WHITE);
     out.println(root.getName() + "/");
     printTreeHelper(root, 1);
   }
@@ -125,15 +126,27 @@ public class TruffulaPrinter {
     // get the files/ folder and loop through , if empty stop recursion
     File[] files = folder.listFiles();
 
-    if (files == null) {
-        return;
-    }
+    if (files == null) return;
+    
+    
 
     for (File file : files) {
+      // wave 5: skipping hidden is not allowed
+      if (!options.isShowHidden() && file.isHidden()) {
+        continue;
+      }
+       ConsoleColor color;
+        if (options.isUseColor()) {
+            color = colorSequence.get(depth % colorSequence.size());
+        } else {
+            color = ConsoleColor.WHITE;
+        }
+
+        out.setCurrentColor(color);
 
         // indentation of 3 spaces per level
         for (int i = 0; i < depth; i++) {
-            out.print("   ", true);
+            out.print("   ", false);
         }
 
         // if its a directory directory , print name and recurse
@@ -148,6 +161,7 @@ public class TruffulaPrinter {
         else {
             out.println(file.getName());
         }
+        
     }
 }
 }
